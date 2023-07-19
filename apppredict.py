@@ -54,14 +54,14 @@ def explore_data(df):
 
     fig, ax = plt.subplots()
     ax.scatter(df['RM'], df['MEDV'])
-    ax.set_xlabel('RM')
-    ax.set_ylabel('MEDV')
+    ax.set_xlabel('RM: Average number of rooms per dwelling')
+    ax.set_ylabel('Median value of owner-occupied homes in $1000s')
     st.pyplot(fig)
 
     st.write("#### Histogram")
     fig, ax = plt.subplots()
     ax.hist(df['MEDV'])
-    ax.set_xlabel('MEDV')
+    ax.set_xlabel('Median value of owner-occupied homes in $1000s')
     ax.set_ylabel('Frequency')
     st.pyplot(fig)
 
@@ -128,10 +128,7 @@ def train_modelR(df):
     return modelR
 
 # Function to predict house prices using LinearRegression
-#def predict_price(model, input_data):
-#    prediction = model.predict(input_data)
-#    return prediction
-# Function to predict house prices
+
 def predict_price(model, input_data):
     # Ensure input_data has the same number of features as the training dataset
     if input_data.shape[1] != model.coef_.shape[0]:
@@ -140,7 +137,7 @@ def predict_price(model, input_data):
     prediction = model.predict(input_data)
     return prediction
 
-# Function to predict house prices using Randomforest
+# Function to predict house prices using RandomForest
 def predict_priceR(modelR, input_data):
     predictionR = modelR.predict(input_data)
     return predictionR
@@ -185,15 +182,18 @@ def main():
 
     input_data = np.array([[crim, zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, b, lstat, medv]])
 
-    if st.button("Predict Linear"):
+    if st.button("Predict Price"):
         prediction = predict_price(model, input_data)
-        st.write("## Predicted House Price:", prediction)
+        st.write("### Predicted House Price using LinearRegression:", prediction)
       #  visualize_prediction(df, prediction)
       #  st.write(prediction)
 
-    if st.button("Predict RandomForest"):
         prediction = predict_priceR(modelR, input_data)
-        st.write("## Predicted House Price:", prediction)
+        st.write("### Predicted House Price using RandomForest:", prediction)
+
+   # if st.button("Predict RandomForest"):
+    #    prediction = predict_priceR(modelR, input_data)
+     #   st.write("## Predicted House Price using RandomForest:", prediction)
       #  visualize_prediction(df, prediction)
        # st.write(prediction)
 
